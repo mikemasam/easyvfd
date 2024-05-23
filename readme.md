@@ -32,6 +32,27 @@ This is a simplified TRA VFD API for instant receipt issuing, automated Z-report
     npm install
     ```
 
+## Configuration .env
+
+```.env
+
+PORT=8080
+DB_HOST="localhost"
+DB_NAME="easyvfd"
+DB_USER="root"
+DB_PASSWORD="password"
+
+TRA_URL="https://vfdtest.tra.go.tz"
+#TRA_URL="https://virtual.tra.go.tz/efdmsRctApi"
+TOKEN_URL="vfdtoken"
+REGISTER_CLIENT_URL="api/vfdregreq"
+
+POST_RECEIPT_URL="/api/efdmsRctInfo"
+POST_ZREPORT_URL="/api/efdmszreport"
+```
+
+
+
 ## Starting the Server
 
 To start the server, use one of the following commands:
