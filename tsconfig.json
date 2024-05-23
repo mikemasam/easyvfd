@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "preserveSymlinks": true,
+    "baseUrl": ".",
+    "target": "es2017" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "module": "nodenext" /* Specify what module code is generated. */,
+    "moduleResolution": "nodenext" /* Specify how TypeScript looks up a file from a given module specifier. */,
+    "paths": {
+      "#models/*": ["./models/*"],
+      "#mongo/*": ["./mongo/*"],
+      "#lib/*": ["lib/*"],
+      "#app/*": ["app/*"]
+    },
+    "outDir": "./dist" /* Specify an output folder for all emitted files. */,
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    "strict": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": false,
+    "strictNullChecks": true
+  }
+}

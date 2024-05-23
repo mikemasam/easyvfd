@@ -1,0 +1,6 @@
+node_modules
+.env
+mail/tmp
+dist
+data
+todo.txt
