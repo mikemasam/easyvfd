@@ -14,11 +14,16 @@ create$kernel(
     version: "0.0.1",
     port: 8080,
     logging: {
-      format: "simple",
+      format: "full",
+      all: false,
       exception: true,
+      http: true,
+      networking: true,
       job: true,
-      queue: false,
-      app: {}
+      queue: true,
+      app: {
+
+      }
     },
   },
   [knexdbinit],

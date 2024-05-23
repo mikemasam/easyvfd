@@ -2,6 +2,8 @@
 ### Starting Server (bun is required)
 - have bun installed  - https://bun.sh/docs/installation
 ```curl -fsSL https://bun.sh/install | bash```
+- install packages
+``` npm install```
 - how to start
 ``` npm start ```
 
