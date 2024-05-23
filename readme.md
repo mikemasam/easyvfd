@@ -1,4 +1,3 @@
-```markdown
 # Simplified TRA VFD API
 
 This library provides a simplified TRA VFD API for instant receipt issuing, automated Z-reporting, and persistent storage.
