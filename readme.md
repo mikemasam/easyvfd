@@ -112,7 +112,13 @@ A successful response will have the following format:
 
 ```json
 {
-  "data": true,
+  "data": {
+    "rctv_num": "21323854",
+    "znum": "20240401",
+    "tin": "100100224",
+    "date": "2024-04-01",
+    "time": "11:10:09"
+  },
   "status": 200,
   "message": "Ok",
   "success": true
