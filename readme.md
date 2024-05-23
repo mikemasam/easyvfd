@@ -1,25 +1,63 @@
+```markdown
+# Simplified TRA VFD API
 
-### Starting Server (bun is required)
-- have bun installed  - https://bun.sh/docs/installation
-```curl -fsSL https://bun.sh/install | bash```
-- install packages
-``` npm install```
-- how to start
-``` npm start ```
-or 
-``` bun index.ts```
+This library provides a simplified TRA VFD API for instant receipt issuing, automated Z-reporting, and persistent storage.
 
+## Table of Contents
 
+- [Description](#description)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Starting the Server](#starting-the-server)
+- [TIN Registration](#tin-registration)
+- [Receipt Posting](#receipt-posting)
+- [Response](#response)
 
+## Description
 
-### TIN registration
+This is a simplified TRA VFD API for instant receipt issuing, automated Z-reporting, and persistent storage.
 
+## Requirements
+
+- [Bun](https://bun.sh/docs/installation) is required to run the server.
+
+## Installation
+
+1. Install Bun:
+    ```bash
+    curl -fsSL https://bun.sh/install | bash
+    ```
+2. Install the necessary packages:
+    ```bash
+    npm install
+    ```
+
+## Starting the Server
+
+To start the server, use one of the following commands:
+
+```bash
+npm start
 ```
+or
+```bash
+bun index.ts
+```
+
+## TIN Registration
+
+Register a TIN using the following command:
+
+```bash
 bun index.ts api clients create --certkey=12312 --tin=1231321 --key=data/key.pem --certpath=data/cert.pem
 ```
-### Receipt Posting
-````JS
-body = () => ({
+
+## Receipt Posting
+
+To post a receipt, use the following JavaScript example:
+
+```js
+const body = () => ({
   tin: "100100224",
   issued_date: "2024-04-01 11:10:09",
   bill_reference: Math.random().toString(),
@@ -28,7 +66,7 @@ body = () => ({
   customer_id_type: "1",
   customer_name: "123123",
   customer_mobile: "123123",
-  items:[{
+  items: [{
     ref: "item_1",
     desc: "item 1",
     qty: 1,
@@ -41,12 +79,24 @@ body = () => ({
     type: "CASH",
     amount: 11010
   }]
-})
+});
+
 await axios.post("http://localhost:8080/api/receipts/create", body()).then(res => {
   console.log(res.data);
-})
+});
 ```
-#### Response
+
+## Response
+
+A successful response will have the following format:
+
 ```json
-{ data: true, status: 200, message: 'Ok', success: true }
+{
+  "data": true,
+  "status": 200,
+  "message": "Ok",
+  "success": true
+}
 ```
+
+This documentation provides an overview and detailed steps to set up and use the simplified TRA VFD API. 
