@@ -13,7 +13,7 @@ import { DateTime } from "luxon";
 
 export default async function writeVfdReceipt(
   receipt_id: number,
-): Promise<[boolean, string]> {
+): Promise<[false | VfdReceipt, string]> {
   const receipt = await Receipt.query().findById(receipt_id);
   if (!receipt) return [false, "receipt not found"];
   const client = await Client.query().findById(receipt.client_id);
@@ -115,5 +115,5 @@ export default async function writeVfdReceipt(
     amount_tax_incl: total_incl.toNumber(),
     status: VfdReceipt.STATUS_PENDING,
   });
-  return [true, "VFD written successful"];
+  return [vfd_receipt, "VFD written successful"];
 }

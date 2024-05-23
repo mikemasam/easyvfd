@@ -43,7 +43,12 @@ export default class TraNet {
       })
       .catch((er) => {
         //console.log(`--> [${er.message}]`);
-        return er?.response || null;
+        //return er?.response || null;
+        return {
+          data: null,
+          statusText: er?.response ?? er.message ?? null,
+          status: 400
+        };
       });
     return [result.data, result, result.status, result.statusText];
   }
