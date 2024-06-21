@@ -19,6 +19,14 @@ export default async function write_receipt(
     bill_receipt: body.bill_receipt,
   });
   if (dup_receipt) return [false, "Duplicate bill receipt"];
+
+  const codes = client.taxcodelist();
+  for (let i = 0; i < body.items.length; i++) {
+    const item = body.items[i];
+    const taxcode = codes.find((e) => e.code == item.tax_code)!;
+    if(!taxcode) return [false, "Invalid tax code:" + item.tax_code]
+  }
+
   const receipt = await Receipt.query().insert({
     bill_reference: body.bill_reference,
     bill_receipt: body.bill_receipt,
@@ -30,7 +38,6 @@ export default async function write_receipt(
   });
   if (!receipt) return [false, "Receipt failed"];
 
-  const codes = client.taxcodelist();
   for (let i = 0; i < body.items.length; i++) {
     const item = body.items[i];
     let amount_incl = new Decimal(item.amount_incl || 0);
@@ -52,7 +59,7 @@ export default async function write_receipt(
     });
     if (!r) return [false, "Failed"];
   }
-  for (let i = 0; i < body.items.length; i++) {
+  for (let i = 0; i < body.payments.length; i++) {
     const item = body.payments[i];
     const r = await ReceiptPayment.query().insert({
       receipt_id: receipt.id,

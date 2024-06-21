@@ -66,7 +66,7 @@ export default class TraNet {
   }
   contentSignedXml(xml: Object, privateKey64: string) {
     this.ctx.headers["Content-Type"] = "Application/xml";
-    const [out] = buildXmlContent(xml, privateKey64)
+    const [out, ...other] = buildXmlContent(xml, privateKey64)
     AppLogger.log("tra-transport", out)
     this.ctx.data = out;
     return this;

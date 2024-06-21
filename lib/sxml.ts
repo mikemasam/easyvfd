@@ -1,3 +1,13 @@
+function escapeHTML(str: string) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/`/g, "&#96;")
+    .replace(/~/g, "&#126;");
+}
 export default function builder_xml(
   body: any,
   opts: { header: boolean },
@@ -14,13 +24,20 @@ export default function builder_xml(
     if (typeof value === "object" && value != null) return "object";
     return "unknown";
   };
-  const writeArray = (obj: Array<any>, indent = 0) => {
+  const writeArray = (
+    obj: Array<any>,
+    indent = 0,
+    parentK: string | null = null,
+  ) => {
     for (let i = 0; i < obj.length; i++) {
       const value = obj[i];
+      if (parentK) writeStartTag(parentK);
       writeObj(value, indent + 1);
+      if (parentK) writeEndTag(parentK);
     }
   };
   const writeOutValue = (value: any) => {
+    if (typeof value == "string") value = escapeHTML(value);
     output.push(`${value}`);
   };
   const writeStartTag = (tag: string) => {
@@ -40,22 +57,35 @@ export default function builder_xml(
     let keys = Object.keys(obj);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      writeStartTag(key);
       const value = obj[key];
       const type = getType(value);
       if (type == "object") {
+        writeStartTag(key);
         writeObj(value, indent + 1);
+        writeEndTag(key);
       } else if (type == "simple") {
+        writeStartTag(key);
         writeOutValue(value);
+        writeEndTag(key);
       } else if (type == "array") {
-        writeArray(value, indent);
+        const parentKeys = Object.keys(obj);
+        if(parentKeys.length != 1) writeStartTag(key);
+        writeArray(
+          value,
+          indent,
+          parentKeys.length == 1 ? parentKeys[0] : null,
+        );
+        if(parentKeys.length != 1) writeEndTag(key);
       } else {
+        writeStartTag(key);
+        writeEndTag(key);
       }
-      writeEndTag(key);
     }
   };
   const build = () => {
     writeObj(body, 1);
+    console.log(output.join(""));
+    process.exit(0);
     return output.join("");
   };
   return build();
